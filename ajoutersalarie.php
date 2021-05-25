@@ -86,7 +86,7 @@
         if ($var == false) {
             echo"echec de l'exécution de la requête.<br/>";
         } else {
-            echo"Personne est enregistrée<br/>";
+            echo"Ajout effectué<br/>";
         }
         mysqli_stmt_close($res);
         }

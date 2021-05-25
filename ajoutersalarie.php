@@ -10,7 +10,7 @@
         <!-- Body -->
 
         <div id="body">            
-            <form method="post" action="gestionsalaries.php">
+            <form method="post" action="ajoutersalarie.php">
 
                 <p>
                     Nom* :
@@ -20,7 +20,7 @@
                     Adresse mail* :
                     <input type="email" name="mail"/></br></br>
                     Numéro de téléphone* :
-                    <input type="tel" name="telephone"/></br></br>
+                    <input type="text" name="telephone"/></br></br>
                     Fonction* :
                     <select name="fonction">
                         <option value="Enseignant">Enseignant</option>
@@ -44,7 +44,7 @@
                     Rue :
                     <input type="text" name="rue"/></br></br>
                     Nationalité :
-                    <input type="text" name="nationalité"/></br></br>
+                    <input type="text" name="nationalite"/></br></br>
                     Sexe :
                     <input type="text" name="sexe"/></br></br>
                     Situation familiale :
@@ -55,6 +55,43 @@
                     <input type="submit" value="Valider"/></br></br>
                 </p>
         </div>
+        <?php
+        $connect = mysqli_connect("localhost", "root", "", "test");
+        if ($connect) {
+            
+        } else {
+            echo "echec de connexion" . mysqli_connect_error() . "<br/>";
+        }
+        if (isset($_POST["nom"])){
+        $req = "insert into informations(nom,prenom,mail,telephone,fonction,contrat,date_embauche,RTT,CP,code_postal,ville,rue,nationalite,sexe,situation_familiale,age)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $res = mysqli_prepare($connect, $req);
+        $var = mysqli_stmt_bind_param($res,'ssssssssssssssss',$nom,$prenom,$mail,$telephone,$fonction,$contrat,$date_embauche,$RTT,$CP,$code_postal,$ville,$rue,$nationalite,$sexe,$situation_familiale,$age);               
+        $nom = $_POST["nom"];
+        $prenom = $_POST["prenom"];
+        $mail = $_POST["mail"];
+        $telephone = $_POST["telephone"];
+        $fonction = $_POST["fonction"];
+        $contrat = $_POST["contrat"];
+        $date_embauche = $_POST["date_embauche"];
+        $RTT = $_POST["RTT"];
+        $CP = $_POST["CP"];
+        $code_postal = $_POST["code_postal"];
+        $ville = $_POST["ville"];
+        $rue = $_POST["rue"];
+        $nationalite = $_POST["nationalite"];
+        $sexe = $_POST["sexe"];
+        $situation_familiale = $_POST["situation_familiale"];
+        $age = $_POST["age"];
+        $var = mysqli_stmt_execute($res);
+        if ($var == false) {
+            echo"echec de l'exécution de la requête.<br/>";
+        } else {
+            echo"Personne est enregistrée<br/>";
+        }
+        mysqli_stmt_close($res);
+        }
+        ?>
+
 
         <!-- Footer -->
 

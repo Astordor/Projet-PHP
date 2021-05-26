@@ -43,7 +43,7 @@
                                             <td><?php echo $row['prenom']; ?></td>
                                             <td><?php echo $row['fonction']; ?></td>
                                             <td><?php echo $row['contrat']; ?></td>
-                                            <td><a href="menuadmin.php">Modifier</a></td>
+                                            <td><a href="modifieruser.php?value=<?php echo $row['mail'] ?>">Modifier</a></td>
                                             <td><input type="checkbox" name="case[]" value=<?php echo $row['mail']; ?> /></td>
                                         </tr>
                                         <?php
@@ -52,7 +52,7 @@
                             }
                             ?>                    
                         </tbody>
-                    </table>
+                    </table>                   
                     </div>
 
                     <!-- Footer -->
@@ -60,4 +60,4 @@
                     <?php include("footeradmin.php"); ?>
 
                     </body>
-                    </html>
+                    </html>                  

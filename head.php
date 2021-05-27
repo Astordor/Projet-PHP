@@ -1,4 +1,5 @@
 <header>
+    <link href="style.css" rel="stylesheet" type="text/css">
     <h3>
         <img 
             src="logo.png"

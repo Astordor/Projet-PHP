@@ -27,6 +27,7 @@
                             <th>Fonction</th>
                             <th>Type contrat</th>
                             <th>Modification</th>
+                            <th>Consultation des commentaires</th>
                             <th>Suppression</th>
                         </tr>
                         </thead>
@@ -44,6 +45,7 @@
                                             <td><?php echo $row['fonction']; ?></td>
                                             <td><?php echo $row['contrat']; ?></td>
                                             <td><a href="modifieruser.php?value=<?php echo $row['mail'] ?>">Modifier</a></td>
+                                            <td><a href="consultationcommentaires.php?value=<?php echo $row['mail'] ?>">Consulter</a></td>
                                             <td><input type="checkbox" name="case[]" value=<?php echo $row['mail']; ?> /></td>
                                         </tr>
                                         <?php
@@ -56,7 +58,7 @@
                     </div>
 
                     <!-- Footer -->
-                    </br><input type="submit" value="Valider"/></br></br>
+                    </br><input type="submit" value="Supprimer"/></br></br>
                     <?php include("footeradmin.php"); ?>
 
                     </body>

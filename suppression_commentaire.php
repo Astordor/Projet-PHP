@@ -21,12 +21,12 @@
             if (isset($_POST['case'])) {
                 $cases = $_POST['case'];
             }
-            $req = "delete from informations where mail=?";
+            $req = "delete from commentaires where commentaire_id=?";
             $res = mysqli_prepare($connect, $req);
-            $var = mysqli_stmt_bind_param($res, 's', $mail);
+            $var = mysqli_stmt_bind_param($res, 's', $commentaire_id);
             if (!empty($cases)) {
                 foreach ($cases as $value) {
-                    $mail = $value;
+                    $commentaire_id = $value;
                     $var = mysqli_stmt_execute($res);
                     if ($var == false)
                         echo"echec de l'exécution de la requête.<br/>";
@@ -43,3 +43,4 @@
 
     </body>
 </html>
+

@@ -14,7 +14,6 @@
             <ul>
                 <li><a href="gestionsalaries.php">Gérer les salariés</a></li>
                 <li><a href="gestionconges.php">Gérer les congés</a></li>
-                <li><a href="consultationcommentaires.php">Consulter les commentaires</a></li>
             </ul>
         </div>
 

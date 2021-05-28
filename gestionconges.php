@@ -12,8 +12,7 @@
 
         <div id="body">
             <form method="post" action="gestionconges.php">
-                <a href="ajoutersalarie.php">Ajouter un salarié</a>
-                </br><input type="hidden" name="OK" value=1/></br></br>
+                <input type="hidden" name="OK" value="Valider"/>
                 <?php
                 $connect = mysqli_connect("127.0.0.1", "root", "", "test");
                 $sql = "SELECT * FROM conges";
@@ -85,21 +84,23 @@
                                         <?php } ?>                                           
                                     </tr>
                                     <?php
-                                    if (isset($_POST["OK"])) {
+                                    if (isset($_POST['OK'])) {
                                         $req = "update conges set etat=?, commentaire=? where demande_id =?";
                                         $res = mysqli_prepare($connect, $req);
                                         $var = mysqli_stmt_bind_param($res, 'sss', $etat, $commentaire, $demande_id);
-                                        if ($row['etat']==""){
-                                        $etat = $_POST[$row['demande_id']];
-                                        }
-                                        else{
-                                        $etat=$row['etat'];
+                                        if ($row['etat'] == "") {
+                                            $etat = $_POST[$row['demande_id']];
+                                            if ($etat == 1) {
+                                                $a = $etat;
+                                            }
+                                        } else {
+                                            $etat = $row['etat'];
+                                            $a = 3;
                                         }
                                         if ($row['commentaire'] == "") {
-                                            $commentaire = $_POST[$row['demande_id']."a"];
-                                        }
-                                        else{
-                                           $commentaire=$row['commentaire']; 
+                                            $commentaire = $_POST[$row['demande_id'] . "a"];
+                                        } else {
+                                            $commentaire = $row['commentaire'];
                                         }
                                         $demande_id = $row['demande_id'];
                                         $var = mysqli_stmt_execute($res);
@@ -107,14 +108,34 @@
                                         if ($var == false) {
                                             echo "echec de l'exécution de la requête.<br/>";
                                         }
+                                        if ($a == 1) {
+                                            if ($row['type_conge'] == "RTT") {
+                                                $req2 = "SELECT * FROM informations where mail ='" . $row['mail#'] . "'";
+                                                $result2 = $connect->query($req2);
+                                                $row2 = $result2->fetch_assoc();
+                                                $req = "update informations set RTT=? where mail ='" . $row['mail#'] . "'";
+                                                $res = mysqli_prepare($connect, $req);
+                                                $var = mysqli_stmt_bind_param($res, 's', $RTT);
+                                                $RTT = $row2['RTT'] - (int) $row['nbr_jours'];
+                                                $var = mysqli_stmt_execute($res);
+                                            } elseif ($row['type_conge'] == "CP") {
+                                                $req3 = "SELECT * FROM informations where mail ='" . $row['mail#'] . "'";
+                                                $result3 = $connect->query($req3);
+                                                $row3 = $result3->fetch_assoc();
+                                                $req = "update informations set CP=? where mail ='" . $row['mail#'] . "'";
+                                                $res = mysqli_prepare($connect, $req);
+                                                $var = mysqli_stmt_bind_param($res, 's', $CP);
+                                                $CP = $row3['CP'] - (int) $row['nbr_jours'];
+                                                $var = mysqli_stmt_execute($res);
+                                            }
+                                        }
                                     }
                                 }
                             }
                             ?>                    
                         </tbody>
                     </table>
-                    <?php
-                    ?>
+                    <?php ?>
                     </div>
 
                     <!-- Footer -->

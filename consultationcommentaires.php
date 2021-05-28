@@ -37,8 +37,12 @@
                                         <tr>
                                             <td><?php echo $row['commentaire']; ?></td>
                                             <td><?php echo $row['date_commentaire']; ?></td>
-                                            <td><a href="repondre_commentaire.php?value=<?php echo $row['commentaire_id'] ?>">Répondre</a></td>
-                                            <td><input type="checkbox" name="case[]" value=<?php echo $row['commentaire_id']; ?> /></td>
+                                            <?php if ($row['reponse'] == "") { ?>
+                                                <td><a href="repondre_commentaire.php?value=<?php echo $row['commentaire_id'] ?>">Répondre</a></td>
+                                            <?php } else { ?>
+                                                <td><?php echo $row['reponse']; ?></td>
+                                                <?php } ?>
+                                                <td><input type="checkbox" name="case[]" value=<?php echo $row['commentaire_id']; ?> /></td>
                                             </tr>
                                             <?php
                                         }

@@ -15,6 +15,7 @@
                 <li><a href="gestionprofil.php">Consulter mon profil</a></li>
                 <li><a href="postercommentaire.php">Poster un commentaire</a></li>
                 <li><a href="conges.php">Faire une demande de congé</a></li>
+                <li><a href="modifiermdp.php">Modifier mon mot de passe</a></li>
             </ul>
         </div>
 

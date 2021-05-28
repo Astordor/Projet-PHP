@@ -63,9 +63,9 @@
             echo "echec de connexion" . mysqli_connect_error() . "<br/>";
         }
         if (isset($_POST["nom"])){
-        $req = "insert into informations(nom,prenom,mail,telephone,fonction,contrat,date_embauche,RTT,CP,code_postal,ville,rue,nationalite,sexe,situation_familiale,age)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $req = "insert into informations(nom,prenom,mail,telephone,fonction,contrat,date_embauche,RTT,CP,code_postal,ville,rue,nationalite,sexe,situation_familiale,age,password)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $res = mysqli_prepare($connect, $req);
-        $var = mysqli_stmt_bind_param($res,'ssssssssssssssss',$nom,$prenom,$mail,$telephone,$fonction,$contrat,$date_embauche,$RTT,$CP,$code_postal,$ville,$rue,$nationalite,$sexe,$situation_familiale,$age);               
+        $var = mysqli_stmt_bind_param($res,'sssssssssssssssss',$nom,$prenom,$mail,$telephone,$fonction,$contrat,$date_embauche,$RTT,$CP,$code_postal,$ville,$rue,$nationalite,$sexe,$situation_familiale,$age,$password);               
         $nom = $_POST["nom"];
         $prenom = $_POST["prenom"];
         $mail = $_POST["mail"];
@@ -82,6 +82,7 @@
         $sexe = $_POST["sexe"];
         $situation_familiale = $_POST["situation_familiale"];
         $age = $_POST["age"];
+        $password = random_int(1000, 9999);
         $var = mysqli_stmt_execute($res);
         if ($var == false) {
             echo"echec de l'exécution de la requête.<br/>";

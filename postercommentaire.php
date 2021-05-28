@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -27,7 +28,7 @@
                     $req = "insert into `commentaires` (`mail#` ,`commentaire`) values (?,?)";
                     $res = mysqli_prepare($connect, $req);
                     $var = mysqli_stmt_bind_param($res, 'ss', $mail, $commentaire);
-                    $mail = "Mister3@esme.fr"; //need update
+                    $mail = $_SESSION['login'];
                     $commentaire = $_POST["commentaire"];
                     $var = mysqli_stmt_execute($res);
                     if ($var == false) {

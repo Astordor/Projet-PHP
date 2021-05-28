@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -21,7 +22,7 @@
                     $res = mysqli_prepare($connect, $req);
                     $var = mysqli_stmt_bind_param($res, 'ss', $password, $mail);
                     $password = $_POST['password'];
-                    $mail = "Mister3@esme.fr";
+                    $mail = $_SESSION['login'];
                     $var = mysqli_stmt_execute($res);
 
                     if ($var == false) {

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -46,7 +47,7 @@
                     $nom = $_POST['nom'];
                     $prenom = $_POST['prenom'];
                     $age = $_POST['age'];
-                    $mail = "Mister3@esme.fr";
+                    $mail = $_SESSION['login'];
                     $var = mysqli_stmt_execute($res);
 
                     if ($var == false) {

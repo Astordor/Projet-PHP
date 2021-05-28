@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -43,7 +44,7 @@
                             <?php
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
-                                    if ($row['mail'] == 'Mister2@esme.fr') { //need update
+                                    if ($row['mail'] == $_SESSION['login']) { //need update
                                         ?>
                                         <tr>
                                             <td><?php echo $row['mail']; ?></td>

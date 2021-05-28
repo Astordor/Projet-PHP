@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -53,9 +54,11 @@
                                 while (mysqli_stmt_fetch($res)) {
                                     if ($password == $_POST['password'] AND $admin == $_POST['admin']) {
                                         if ($_POST['admin'] == 1) {
+                                            $_SESSION['login'] = $_POST['username'];
                                             header("Location: menuadmin.php");
                                         }
                                         if ($_POST['admin'] == 0) {
+                                            $_SESSION['login'] = $_POST['username'];
                                             header("Location: menuuser.php");
                                         }
                                     } else {

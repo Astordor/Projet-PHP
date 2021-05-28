@@ -21,7 +21,7 @@
                     Adresse mail* :
                     <input type="email" name="mail"/></br></br>
                     Numéro de téléphone* :
-                    <input type="text" name="telephone"/></br></br>
+                    <input type="text" name="telephone" pattern="^\d{10}$"/></br></br>
                     Fonction* :
                     <select name="fonction">
                         <option value="Enseignant">Enseignant</option>
@@ -54,6 +54,7 @@
                     <input type="text" name="age"/></br></br>
 
                     <input type="submit" value="Valider"/></br></br>
+
                 </p>
         </div>
         <?php
@@ -63,41 +64,46 @@
         } else {
             echo "echec de connexion" . mysqli_connect_error() . "<br/>";
         }
-        if (isset($_POST["nom"])){
-        $req = "insert into informations(nom,prenom,mail,telephone,fonction,contrat,date_embauche,RTT,CP,code_postal,ville,rue,nationalite,sexe,situation_familiale,age,password)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $res = mysqli_prepare($connect, $req);
-        $var = mysqli_stmt_bind_param($res,'sssssssssssssssss',$nom,$prenom,$mail,$telephone,$fonction,$contrat,$date_embauche,$RTT,$CP,$code_postal,$ville,$rue,$nationalite,$sexe,$situation_familiale,$age,$password);               
-        $nom = $_POST["nom"];
-        $prenom = $_POST["prenom"];
-        $mail = $_POST["mail"];
-        $telephone = $_POST["telephone"];
-        $fonction = $_POST["fonction"];
-        $contrat = $_POST["contrat"];
-        $date_embauche = $_POST["date_embauche"];
-        $RTT = $_POST["RTT"];
-        $CP = $_POST["CP"];
-        $code_postal = $_POST["code_postal"];
-        $ville = $_POST["ville"];
-        $rue = $_POST["rue"];
-        $nationalite = $_POST["nationalite"];
-        $sexe = $_POST["sexe"];
-        $situation_familiale = $_POST["situation_familiale"];
-        $age = $_POST["age"];
-        $password = random_int(1000, 9999);
-        $var = mysqli_stmt_execute($res);
-        if ($var == false) {
-            echo"echec de l'exécution de la requête.<br/>";
-        } else {
-            echo"Ajout effectué<br/>";
-        }
-        mysqli_stmt_close($res);
+        if (isset($_POST["nom"])) {
+            if ($_POST['nom'] != "" AND $_POST['prenom'] != "" AND $_POST['mail'] != "" AND $_POST['telephone'] != "" AND $_POST['fonction'] != "" AND $_POST['contrat'] != "" AND $_POST['date_embauche'] != "" AND $_POST['RTT'] != "" AND $_POST['CP'] != "") {
+
+                $req = "insert into informations(nom,prenom,mail,telephone,fonction,contrat,date_embauche,RTT,CP,code_postal,ville,rue,nationalite,sexe,situation_familiale,age,password)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                $res = mysqli_prepare($connect, $req);
+                $var = mysqli_stmt_bind_param($res, 'sssssssssssssssss', $nom, $prenom, $mail, $telephone, $fonction, $contrat, $date_embauche, $RTT, $CP, $code_postal, $ville, $rue, $nationalite, $sexe, $situation_familiale, $age, $password);
+                $nom = $_POST["nom"];
+                $prenom = $_POST["prenom"];
+                $mail = $_POST["mail"];
+                $telephone = $_POST["telephone"];
+                $fonction = $_POST["fonction"];
+                $contrat = $_POST["contrat"];
+                $date_embauche = $_POST["date_embauche"];
+                $RTT = $_POST["RTT"];
+                $CP = $_POST["CP"];
+                $code_postal = $_POST["code_postal"];
+                $ville = $_POST["ville"];
+                $rue = $_POST["rue"];
+                $nationalite = $_POST["nationalite"];
+                $sexe = $_POST["sexe"];
+                $situation_familiale = $_POST["situation_familiale"];
+                $age = $_POST["age"];
+                $password = random_int(1000, 9999);
+                $var = mysqli_stmt_execute($res);
+                if ($var == false) {
+                    echo"echec de l'exécution de la requête.<br/>";
+                } else {
+                    echo"Ajout effectué<br/>";
+                    mysqli_stmt_close($res);
+                }
+            } else {
+                echo"Veuillez remplir tous les champs suivis d'un *";
+            }
         }
         ?>
 
 
         <!-- Footer -->
 
-        <?php include("footeradmin.php"); ?>
+<?php include("footeradmin.php"); ?>
 
     </body>
 </html>

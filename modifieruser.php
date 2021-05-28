@@ -19,7 +19,7 @@
                     Prénom :
                     <input type="text" name="prenom"/></br></br>
                     Numéro de téléphone :
-                    <input type="text" name="telephone"/></br></br>
+                    <input type="text" name="telephone" pattern="^\d{10}$"/></br></br>
                     Type de contrat* :
                     <select name="contrat">
                         <option value="CDI">CDI</option>

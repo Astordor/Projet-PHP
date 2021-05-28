@@ -35,28 +35,40 @@
                     echo "echec de connexion" . mysqli_connect_error() . "<br/>";
                 }
                 if (isset($_POST["type_conge"])) {
-                    $req = "insert into `conges` (`mail#` ,`type_conge`,`date_debut`,`date_fin`,`nbr_jours`) values (?,?,?,?,?)";
-                    $res = mysqli_prepare($connect, $req);
-                    $var = mysqli_stmt_bind_param($res, 'sssss', $mail, $type_conge, $date_debut, $date_fin, $nbr_jours);
-                    $mail = "Mister3@esme.fr"; //need update
-                    $type_conge = $_POST["type_conge"];
-                    $date_debut=$_POST["date_debut"];
-                    $date_fin=$_POST["date_fin"];
-                    $nbr_jours=$_POST["nbr_jours"];
-                    $var = mysqli_stmt_execute($res);
-                    if ($var == false) {
-                        echo"echec de l'exécution de la requête.<br/>";
-                    } else {
-                        echo"Demande de congé soumise !<br/>";
-                    }
-                    mysqli_stmt_close($res);
+                $sql = "SELECT * FROM informations where mail='".$_SESSION['login']."'";
+                $result = $connect->query($sql) or die($connect->error);
+                $row = $result->fetch_assoc();
+                if($_POST['type_conge']=="RTT" AND $row['RTT']-(int)($_POST['nbr_jours'])<0){
+                    echo "Il ne vous reste pas suffisament de RTTs";
+                }       
+                elseif($_POST['type_conge']=="CP" AND $row['CP']-(int)($_POST['nbr_jours'])<0){
+                    echo "Il ne vous reste pas suffisament de congés payés";
                 }
-                ?>
-        </div>
+                else{
+                    
+                        $req = "insert into `conges` (`mail#` ,`type_conge`,`date_debut`,`date_fin`,`nbr_jours`) values (?,?,?,?,?)";
+                        $res = mysqli_prepare($connect, $req);
+                        $var = mysqli_stmt_bind_param($res, 'sssss', $mail, $type_conge, $date_debut, $date_fin, $nbr_jours);
+                        $mail = $_SESSION['login'];
+                        $type_conge = $_POST["type_conge"];
+                        $date_debut = $_POST["date_debut"];
+                        $date_fin = $_POST["date_fin"];
+                        $nbr_jours = $_POST["nbr_jours"];
+                        $var = mysqli_stmt_execute($res);
+                        if ($var == false) {
+                            echo"echec de l'exécution de la requête.<br/>";
+                        } else {
+                            echo"Demande de congé soumise !<br/>";
+                        }
+                        mysqli_stmt_close($res);
+                    }
+                }
+                    ?>
+            </div>
 
-        <!-- Footer -->
+            <!-- Footer -->
 
-        <?php include("footeruser.php"); ?>
+            <?php include("footeruser.php"); ?>
 
     </body>
 </html>

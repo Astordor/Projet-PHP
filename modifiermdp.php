@@ -17,27 +17,38 @@
                 <input type="submit" value="Valider"/></br></br>
                 <?php
                 if (isset($_POST["password"])) {
+                    $a = 1;
                     $connect = mysqli_connect("127.0.0.1", "root", "", "test");
-                    $req = "update informations set password=? where mail =?";
-                    $res = mysqli_prepare($connect, $req);
-                    $var = mysqli_stmt_bind_param($res, 'ss', $password, $mail);
-                    $password = $_POST['password'];
-                    $mail = $_SESSION['login'];
-                    $var = mysqli_stmt_execute($res);
+                    $req = "SELECT * FROM informations";
+                    $result = $connect->query($req);
+                    $row = $result->fetch_assoc();
+                    while ($row = $result->fetch_assoc()) {
+                        if ($row['password'] == $_POST['password']) {
+                            $a = 0;
+                        }
+                    }
+                    if ($a == 1) {
+                        $req = "update informations set password=? where mail =?";
+                        $res = mysqli_prepare($connect, $req);
+                        $var = mysqli_stmt_bind_param($res, 'ss', $password, $mail);
+                        $password = $_POST['password'];
+                        $mail = $_SESSION['login'];
+                        $var = mysqli_stmt_execute($res);
 
-                    if ($var == false) {
-                        echo "echec de l'exécution de la requête.<br/>";
+                        if ($var == false) {
+                            echo "echec de l'exécution de la requête.<br/>";
+                        } else {
+                            echo "Mot de passe modifié";
+                            mysqli_stmt_close($res);
+                        }
+                    } else {
+                        echo "Votre mot de passe n'est pas unique, veuillez en saisir un autre";
                     }
-                    else {
-                        echo "Mot de passe modifié";
-                    }
-                    mysqli_stmt_close($res);
                 }
                 ?>
         </div>
 
         <!--Footer-->
-        <a href="gestionsalaries.php">Retour à la page de gestion des salariés</a>
         <?php include("footeruser.php");
         ?>
 

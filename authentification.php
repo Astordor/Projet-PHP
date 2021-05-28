@@ -26,6 +26,10 @@
                     <input type="submit" value="Valider"/></br></br>
                 </p>
                 <?php
+                if(isset($_COOKIE['login']) AND $_COOKIE['login']=="Directeur"){
+                    $_SESSION['login']="directeur@esme.fr";
+                    header("Location: menuadmin.php");
+                }
                 if (isset($_POST['username']) and isset($_POST['password'])) {
                     if ($_POST['username'] == null or $_POST['password'] == null) {
                         echo "Les champs login et mot de passe sont requis";

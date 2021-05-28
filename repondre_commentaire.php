@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php session_start();
+if($_SESSION['login']!='directeur@esme.fr'){
+    header("Location: accessdenied.php");
+}?>
 <!DOCTYPE html>
 <html>
 

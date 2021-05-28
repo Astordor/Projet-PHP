@@ -30,7 +30,6 @@
                     <input type="text" name="situation_familiale"/></br></br>
                     Age :
                     <input type="text" name="age"/></br></br>
-                    <input type="hidden" name="mail" value="Mister3@esme.fr" ?>
                     <input type="submit" value="Valider"/></br></br>
                 </p>
                 <?php

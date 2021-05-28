@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php session_start();
+if($_SESSION['login']!='directeur@esme.fr'){
+    header("Location: accessdenied.php");
+}?>
 <!DOCTYPE html>
 <html>
 
@@ -29,18 +32,45 @@
                 foreach ($cases as $value) {
                     $mail = $value;
                     $var = mysqli_stmt_execute($res);
-                    if ($var == false)
+                    if ($var == false) {
                         echo"echec de l'exécution de la requête.<br/>";
+                    }
                 }
-                mysqli_stmt_close($res);
+            }
+            $req = "delete from commentaires where `mail#`=?";
+            $res = mysqli_prepare($connect, $req);
+            $var = mysqli_stmt_bind_param($res, 's', $mail);
+
+            if (!empty($cases)) {
+                foreach ($cases as $value) {
+                    $mail = $value;
+                    $var = mysqli_stmt_execute($res);
+                    if ($var == false) {
+                        echo"echec de l'exécution de la requête.<br/>";
+                    }
+                }
+            }
+            $req = "delete from conges where `mail#`=?";
+            $res = mysqli_prepare($connect, $req);
+            $var = mysqli_stmt_bind_param($res, 's', $mail);
+
+            if (!empty($cases)) {
+                foreach ($cases as $value) {
+                    $mail = $value;
+                    $var = mysqli_stmt_execute($res);
+                    if ($var == false) {
+                        echo"echec de l'exécution de la requête.<br/>";
+                    }
+                    mysqli_stmt_close($res);
+                }
             }
             ?>
         </div>
 
         <!--Footer-->
         <a href="gestionsalaries.php">Retour à la page de gestion des salariés</a>
-        <?php include("footeradmin.php");
-        ?>
+<?php include("footeradmin.php");
+?>
 
     </body>
 </html>
